@@ -1,0 +1,67 @@
+@font-face{font-family:Peyda;src:url("../fonts/Peyda/Peyda-Regular.woff") format("woff");font-weight:400;font-display:swap}
+@font-face{font-family:Peyda;src:url("../fonts/Peyda/Peyda-Medium.woff") format("woff");font-weight:500;font-display:swap}
+@font-face{font-family:"PeydaWeb FaNum";src:url("../fonts/PeydaWebFaNum_from_RecycleBin/PeydaWebFaNum-Regular.woff2") format("woff2"),url("../fonts/PeydaWebFaNum_from_RecycleBin/PeydaWebFaNum-Regular.woff") format("woff");font-weight:400;font-display:swap}
+@font-face{font-family:"PeydaWeb FaNum";src:url("../fonts/PeydaWebFaNum_from_RecycleBin/PeydaWebFaNum-Medium.woff2") format("woff2"),url("../fonts/PeydaWebFaNum_from_RecycleBin/PeydaWebFaNum-Medium.woff") format("woff");font-weight:500;font-display:swap}
+@font-face{font-family:"PeydaWeb FaNum";src:url("../fonts/PeydaWebFaNum_from_RecycleBin/PeydaWebFaNum-SemiBold.woff2") format("woff2"),url("../fonts/PeydaWebFaNum_from_RecycleBin/PeydaWebFaNum-SemiBold.woff") format("woff");font-weight:600;font-display:swap}
+@font-face{font-family:"PeydaWeb FaNum";src:url("../fonts/PeydaWebFaNum_from_RecycleBin/PeydaWebFaNum-Bold.woff2") format("woff2"),url("../fonts/PeydaWebFaNum_from_RecycleBin/PeydaWebFaNum-Bold.woff") format("woff");font-weight:700;font-display:swap}
+
+/* Sabzevar service app — Figma 415:5 (375 x 1377). Positions are Figma px; the 375px stage scales to the viewport width. */
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth;background:#fff}
+body{margin:0;background:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+:root{--k:1}
+.app{position:relative;width:375px;height:1377px;margin:0 auto;overflow:hidden;direction:rtl;background:#fff;transform-origin:50% 0;zoom:var(--k)}
+.bg{position:absolute;left:0;top:0;width:375px;height:1377px;background:image-set(url("../assets/service/bg.png") 1x,url("../assets/service/bg@2x.png") 2x) 0 0/375px 1377px no-repeat;pointer-events:none}
+.t{position:absolute;display:block;margin:0;white-space:pre;direction:rtl;unicode-bidi:plaintext;font-kerning:normal;font-feature-settings:"kern" 1}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+a{color:inherit;text-decoration:none;-webkit-tap-highlight-color:transparent}
+a:focus-visible,.sl:focus-visible,button:focus-visible{outline:2px solid #dcb259;outline-offset:2px}
+.hit{position:absolute;display:block;transition:background-color .15s,transform .1s}
+.hit-w:hover{background:rgba(255,255,255,.14)}.hit-w:active{background:rgba(255,255,255,.24)}
+.hit-gold{transition:filter .15s,transform .1s}.hit-gold:hover{filter:brightness(1.07) drop-shadow(0 2px 4px rgba(123,87,9,.35))}.hit-gold:active{transform:translateY(1px)}
+.hit-gold .t{pointer-events:none}
+.banner{position:absolute;display:block;border-radius:6px;transition:box-shadow .2s,transform .2s}
+.banner:hover{box-shadow:0 6px 16px rgba(35,49,87,.18)}.banner:active{transform:scale(.99)}
+/* grid tiles */
+.tile{position:absolute;display:block;border-radius:10px;cursor:pointer}
+.tile-img{position:absolute;display:block;background:no-repeat 0 0/100% 100%;transition:transform .18s ease,filter .18s ease}
+.tile:hover .tile-img{transform:translateY(-2px);filter:drop-shadow(0 6px 8px rgba(35,49,87,.14))}
+.tile:active .tile-img{transform:translateY(0) scale(.97)}
+.tile.is-off{cursor:not-allowed}
+.tile.is-off:hover .tile-img{transform:none;filter:none}
+.tile.is-off:active .tile-img{transform:translateX(0);animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+.badge-t{pointer-events:none}
+/* actions slider */
+.acts{position:absolute;left:0;top:0;width:375px;height:0}
+.sl{position:absolute;left:0;width:375px;overflow:hidden;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.sl.is-drag{cursor:grabbing}
+.sl-track{position:absolute;inset:0}
+.card{position:absolute;left:0;background:no-repeat 0 0/100% 100%;will-change:transform;border-radius:8px}
+.card-more{position:absolute;left:12px;bottom:9px;width:66px;height:22px;border-radius:4px}
+.card-more:hover{background:rgba(35,49,87,.06)}
+.card .t{pointer-events:none}
+/* design start state: the first card sits 20px from the right edge with nothing to its right; the looped previous card appears once the user interacts */
+.sl:not(.is-live) .card.is-pre{visibility:hidden}
+/* locked */
+.lock{position:absolute;display:block}
+.lock:hover{background:rgba(255,255,255,.03)}
+.lock::after{content:"";position:absolute;left:167px;top:71px;width:41px;height:52px;border-radius:12px;transition:background-color .2s}
+.lock:hover::after{background:rgba(255,255,255,.08)}
+/* faq */
+.faq{position:absolute;border-radius:6px;transition:box-shadow .2s}
+.faq:hover{box-shadow:0 6px 16px rgba(0,122,58,.22)}
+/* tab bar */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:center;pointer-events:none}
+.tabbar-in{position:relative;width:375px;height:66px;background:no-repeat 0 0/100% 100%;pointer-events:auto;zoom:var(--k)}
+.tab{position:absolute;top:0;height:66px;display:block;color:#59668a}
+.tab-ic{position:absolute;display:block;background:#59668a;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;transition:background-color .2s,transform .2s}
+.tab .t{color:#59668a!important;transition:color .2s}
+.tab:hover .tab-ic{transform:translateY(-1px)}
+.tab.is-on .tab-ic{background:#00b757}.tab.is-on .t{color:#00b757!important}
+.tab-ind{position:absolute;height:2.6px;background:#00b757;border-radius:0 0 2px 2px;transition:left .25s ease}
+/* at the bottom of the page the bar sits exactly on its Figma position (1312..1377) */
+.toast{position:fixed;left:50%;bottom:80px;z-index:60;transform:translate(-50%,10px);max-width:320px;padding:8px 14px;border-radius:8px;background:rgba(35,49,87,.95);color:#fff;
+ font:400 12px/18px "PeydaWeb FaNum",Peyda,sans-serif;direction:rtl;text-align:center;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+.toast.is-on{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}

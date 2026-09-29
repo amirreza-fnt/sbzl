@@ -1,0 +1,79 @@
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;background:#f8faf9}
+body{margin:0;background:#f8faf9;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.app{position:relative;width:360px;height:761px;margin:0 auto;overflow:hidden;direction:rtl;background:#f8faf9;zoom:var(--k);font-family:Peyda,Tahoma,sans-serif;color:#1f1f1f}
+.tx{position:absolute;margin:0;white-space:nowrap}
+/* live header: status strip, green band, emblem + wordmark */
+.reg-top{position:absolute;left:0;top:0;width:360px;height:100px;z-index:1;pointer-events:none;background:linear-gradient(180deg,#079e61 0%,#058a58 55%,#057a50 100%)}
+.status-bar{position:absolute;left:0;top:0;width:360px;height:28px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;box-sizing:border-box;color:#fff;opacity:.95}
+.status-time{font:600 11px/14px "PeydaWeb FaNum",Peyda,sans-serif;letter-spacing:.02em}
+.status-ic{display:flex;align-items:center;gap:5px}
+.status-ic svg{display:block;height:11px;width:auto}
+.reg-band{position:absolute;left:0;top:28px;width:360px;height:72px;overflow:hidden}
+.reg-band::before{content:"";position:absolute;inset:0;background:url("../assets/register/pattern-tile@2x.png") 0 0/60px 60px repeat;opacity:.42;mix-blend-mode:soft-light;pointer-events:none}
+.reg-emblem{position:absolute;left:127px;top:7px;width:49px;height:28px;object-fit:contain}
+.reg-wordmark{position:absolute;left:81px;top:42px;width:196px;height:15px;object-fit:contain}
+.reg-sheet{position:absolute;left:0;top:100px;width:360px;height:586px;background:#f8faf9;border-radius:24px 24px 0 0;z-index:0;box-shadow:0 -1px 0 rgba(255,255,255,.06) inset}
+.back{position:absolute;left:6px;top:32px;width:32px;height:32px;border:0;border-radius:8px;padding:0;background:rgba(255,255,255,.12);cursor:pointer;outline:none;display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:auto}
+.back svg{display:block;width:18px;height:18px}
+.back:hover{background:rgba(255,255,255,.22)}
+.back:active{background:rgba(255,255,255,.3)}
+.back:focus-visible{box-shadow:0 0 0 2px rgba(255,255,255,.85)}
+.reg{position:relative;z-index:2}
+.reg p,.reg h1{margin:0;padding:0}
+/* fields */
+.fld{position:absolute;left:23px;width:316px;height:38px}
+.fld-ic{position:absolute;right:12px;top:50%;width:18px;height:18px;margin-top:-9px;color:#04a669;pointer-events:none}
+.fld input{position:absolute;inset:0;width:100%;height:100%;box-sizing:border-box;margin:0;border:1px solid #cfcfcf;border-radius:8px;background:#fff;
+  padding:0 42px 0 14px;direction:rtl;text-align:right;font:400 12px/36px "PeydaWeb FaNum",Peyda,sans-serif;color:#1f1f1f;outline:none;transition:border-color .15s,box-shadow .15s}
+.fld input.ltr{direction:ltr;text-align:right}
+.fld input:hover{border-color:#b9c0bd}
+.fld input:focus{border-color:#04a669;box-shadow:0 0 0 3px rgba(4,166,105,.14)}
+.fld.is-err input{border-color:#e5484d;box-shadow:0 0 0 3px rgba(229,72,77,.12)}
+.fld.is-ok input{border-color:rgba(4,166,105,.55)}
+.fld .ph{cursor:text;pointer-events:none}
+.fld input:not(:placeholder-shown)~.ph{display:none}
+.err{position:absolute;right:4px;top:39px;margin:0;font:400 9px/12px Peyda,sans-serif;color:#e5484d;white-space:nowrap;opacity:0;transform:translateY(-2px);transition:opacity .15s,transform .15s;pointer-events:none}
+.fld.is-err .err{opacity:1;transform:none}
+/* terms checkbox */
+.terms{position:absolute;left:22px;top:576px;width:316px;height:48px}
+.chk{position:absolute;left:316px;top:2px;width:17px;height:17px;margin:0;opacity:0;cursor:pointer;z-index:2}
+.chk-box{position:absolute;left:318px;top:4px;width:13px;height:13px;border:1px solid #d5d5d5;border-radius:3px;background:#fff;pointer-events:none;transition:background-color .15s,border-color .15s,box-shadow .15s}
+.chk:checked+.chk-box{border-color:#04a669;background:#04a669 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='9' height='7' viewBox='0 0 9 7'><path d='M1 3.5l2.3 2.3L8 1' fill='none' stroke='white' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>") 50% 55%/9px 7px no-repeat}
+.chk:focus-visible+.chk-box{box-shadow:0 0 0 3px rgba(4,166,105,.25)}
+.terms.is-err .chk-box{box-shadow:0 0 0 2px rgba(229,72,77,.7)}
+.terms .err{right:auto;left:0;top:34px}
+.terms.is-err .err{opacity:1;transform:none}
+.lbl{cursor:pointer}
+.lbl a{color:#04a669;font-weight:700;text-decoration:none}
+.lbl a:hover{text-decoration:underline}
+/* submit */
+.go{position:absolute;left:22px;top:630px;width:316px;height:38px;margin:0;padding:0;border:0;border-radius:8px;background:#04a669;cursor:pointer;outline:none;transition:background-color .15s,box-shadow .15s}
+.go:hover{background:#039e5e}
+.go:active{background:#038a56}
+.go:focus-visible{box-shadow:0 0 0 3px rgba(4,166,105,.3)}
+.go .tx{pointer-events:none}
+.go-arr{position:absolute;left:14px;top:50%;width:18px;height:18px;margin-top:-9px;color:#fff;pointer-events:none}
+/* tab bar */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:center;pointer-events:none}
+.tabbar-in{position:relative;width:360px;height:75px;background:#ecf3f6;border-top:1px solid #e2eaee;pointer-events:auto;zoom:var(--k)}
+.tabbar .tx{pointer-events:none}
+.tab{position:absolute;top:8px;height:64px;border-radius:10px;outline:none;text-decoration:none;color:#59668a}
+.tab-ic{position:absolute;left:50%;top:15px;width:24px;height:22px;margin-left:-12px;display:block;color:inherit;transition:color .2s,transform .2s}
+.tab:hover .tab-ic{transform:translateY(-1px)}
+.tab:hover{background:rgba(89,102,138,.06)}
+.tab.is-on{color:#0eb757}
+.tab.is-on .tab-ic{color:#0eb757}
+.tab-ind{position:absolute;top:0;height:2px;width:22px;background:#0eb757;border-radius:0 0 2px 2px;left:303px;pointer-events:none}
+.tab:focus-visible{box-shadow:0 0 0 2px rgba(0,183,87,.35)}
+/* dialogs */
+.dlg{position:absolute;inset:0;z-index:60;display:none;align-items:center;justify-content:center;background:rgba(18,28,24,.45)}
+.dlg.is-on{display:flex}
+.dlg-card{width:300px;box-sizing:border-box;padding:20px 18px 16px;border-radius:14px;background:#fff;box-shadow:0 12px 40px rgba(0,0,0,.2);text-align:right}
+.dlg-card h2{margin:0 0 8px;font:700 15px/22px Peyda,sans-serif;color:#1f1f1f}
+.dlg-card p,.dlg-card li{margin:0 0 8px;font:400 11px/19px Peyda,sans-serif;color:#555}
+.dlg-card ol{margin:0 0 8px;padding:0 16px 0 0}
+.dlg-btn{display:block;width:100%;height:36px;margin-top:6px;border:0;border-radius:8px;background:#04a669;color:#fff;font:700 13px/36px Peyda,sans-serif;cursor:pointer;text-align:center;text-decoration:none}
+.dlg-btn:hover{background:#03925c}
+.ok-ic{width:52px;height:52px;margin:0 auto 10px;border-radius:50%;background:#e6f6ef url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='18' viewBox='0 0 24 18'><path d='M2 9l7 7L22 2' fill='none' stroke='%2304a669' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/></svg>") 50% 50%/24px 18px no-repeat}
+.dlg-card.center{text-align:center}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}

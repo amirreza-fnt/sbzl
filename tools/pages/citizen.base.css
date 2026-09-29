@@ -1,0 +1,72 @@
+/* citizen-services.html: shared header/footer via css/style.css; live middle band. Stage 1366×2708. */
+.stage-outer.cs-outer{height:calc(2708px * var(--k, 1))}
+.stage.cs-stage{height:2708px;background:#f7f7fc}
+.cs-stage .tx{position:absolute;margin:0;white-space:nowrap}
+.cs-stage section,.cs-stage .cs-promo-t,.cs-stage .cs-help,.cs-stage .cs-p{margin:0}
+.cs-foot{position:absolute;left:0;top:-1598px;width:1366px;height:0}
+.cs-p{position:relative}
+/* hero navy band */
+.cs-hero{position:absolute;left:0;top:164px;width:1366px;height:256px;overflow:visible;z-index:1}
+.cs-hero-bg{position:absolute;inset:0;background:linear-gradient(180deg,#19233d 0%,#233157 52%,#2f4575 100%);overflow:hidden}
+.cs-hero-bg::before{content:"";position:absolute;inset:0;background:url("../assets/citizen/hero-pattern@2x.png") 50% 30%/680px 340px no-repeat;opacity:.35;mix-blend-mode:soft-light}
+.cs-hero-ic-wrap{position:absolute;left:50%;top:42px;width:56px;height:56px;margin-left:-28px;border-radius:14px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;color:#7ec8ff}
+.cs-hero-ic{width:32px;height:32px;display:block}
+.cs-hero-notch{position:absolute;left:50%;bottom:-1px;width:54px;height:14px;margin-left:-27px;color:#f7f7fc;pointer-events:none}
+.cs-hero-notch svg{display:block;width:100%;height:100%}
+/* section title ornaments */
+.cs-sec-hd{position:absolute;left:0;width:1366px;height:24px;pointer-events:none;z-index:0}
+.cs-sec-hd.cs-hd-smart{top:498px}
+.cs-sec-hd.cs-hd-city{top:871px}
+.cs-orn{position:absolute;right:142px;top:0;width:28px;height:28px;color:#00b757}
+.cs-line-r,.cs-line-l{position:absolute;top:13px;height:1px;border-radius:1px}
+.cs-line-r{right:178px;width:420px;background:linear-gradient(90deg,rgba(35,49,87,.05),rgba(35,49,87,.22))}
+.cs-line-l{left:120px;width:520px;background:linear-gradient(270deg,rgba(35,49,87,.05),rgba(35,49,87,.22))}
+/* service cards */
+.cs-card{position:absolute;display:block;width:183px;height:223px;text-decoration:none;outline:none;transition:transform .2s ease,filter .2s ease;z-index:2}
+.cs-card-in{position:absolute;inset:2px;display:block;background:#fff;border-radius:12px;border:1px solid #eef0f4;
+  box-shadow:0 2px 0 rgba(35,49,87,.04),0 8px 22px rgba(35,49,87,.09);
+  -webkit-mask-image:var(--cs-card-mask);mask-image:var(--cs-card-mask);-webkit-mask-size:100% 100%;mask-size:100% 100%}
+.cs-card-ic{position:absolute;left:50%;top:58px;width:48px;height:40px;margin-left:-24px;color:#00b757;pointer-events:none}
+.cs-card-go{position:absolute;left:50%;bottom:14px;width:36px;height:36px;margin-left:-18px;border-radius:50%;background-color:#e9edf3;
+  display:flex;align-items:center;justify-content:center;transition:background-color .2s ease}
+.cs-card-go svg{width:14px;height:14px;color:#8b97b3;transition:color .2s ease}
+.cs-card:hover,.cs-card:focus-visible{transform:translateY(-6px);filter:drop-shadow(0 10px 14px rgba(35,49,87,.12))}
+.cs-card:hover .cs-card-go,.cs-card:focus-visible .cs-card-go,.cs-card.is-hover .cs-card-go{background-color:#00b757!important}
+.cs-card:hover .cs-card-go svg,.cs-card:focus-visible .cs-card-go svg,.cs-card.is-hover .cs-card-go svg{color:#fff}
+.cs-card:focus-visible .cs-card-in{box-shadow:0 0 0 2px rgba(0,183,87,.45),0 4px 18px rgba(35,49,87,.08)}
+.cs-card .tx{pointer-events:none}
+/* FAQ */
+.cs-faq{position:relative;z-index:2}
+.cs-faq-badge{position:absolute;left:1288px;top:1504px;width:44px;height:44px;border-radius:50%;background:#00b757;color:#fff;
+  display:flex;align-items:center;justify-content:center;font:800 22px/1 Peyda,sans-serif;box-shadow:0 4px 14px rgba(0,183,87,.35);pointer-events:none;z-index:2}
+.cs-ans{position:absolute;left:49px;top:1556px;width:632px;height:240px;z-index:2;box-sizing:border-box;padding:0;border-radius:12px;border:1px solid #dcdce2;background:#fff}
+.cs-ans-p{margin:0}
+.cs-ans-p.flow{position:absolute;left:29px;top:25px;width:574px;margin:0;font:400 14px/28px "PeydaWeb FaNum",Peyda,sans-serif;color:#6a6a6c;text-align:justify;transition:opacity .2s}
+.cs-faq-list{position:absolute;left:681px;top:1556px;width:633px;max-height:320px;overflow:visible}
+.cs-q{position:relative;display:block;width:100%;height:64px;margin:0;padding:0;border:1px solid #d0d0d6;border-radius:10px;background:#e4e4e9;cursor:pointer;outline:none;font:inherit;text-align:right;box-sizing:border-box;transition:background .15s,border-color .15s}
+.cs-q.is-on{height:84px;background:#fff;border-color:#e0e0e5;box-shadow:0 1px 0 rgba(35,49,87,.04),0 4px 12px rgba(35,49,87,.05)}
+.cs-q:not(.is-on):hover{background:#ebebf0}
+.cs-q-mark{position:absolute;right:18px;top:50%;width:28px;height:28px;margin-top:-14px;border-radius:50%;background:#00b757;color:#fff;display:flex;align-items:center;justify-content:center;font:700 15px/1 Peyda,sans-serif}
+.cs-q-arr{position:absolute;left:16px;top:50%;width:16px;height:16px;margin-top:-8px;color:#8b97b3;transition:transform .15s}
+.cs-q.is-on .cs-q-arr{transform:rotate(-90deg);color:#00b757}
+.cs-q .tx{pointer-events:none;z-index:4}
+.cs-q.is-on .tx{font-weight:var(--q-on,700)!important}
+.cs-q:not(.is-on) .tx{font-weight:var(--q-off,400)!important}
+.cs-help-bar{position:absolute;left:49px;top:1800px;width:632px;height:56px;border-radius:12px;background:linear-gradient(90deg,#233157,#2a3d6b);z-index:1}
+.cs-help{position:absolute;z-index:2}
+.cs-all,.cs-help-btn,.cs-promo-btn{position:absolute;display:block;border-radius:8px;outline:none;text-decoration:none;z-index:2}
+.cs-all:hover .tx,.cs-help-btn:hover .tx{text-decoration:underline}
+.cs-all:focus-visible,.cs-help-btn:focus-visible{box-shadow:0 0 0 2px rgba(0,183,87,.45)}
+.cs-help-btn{background:#1c2f5c;transition:box-shadow .15s,background-color .15s}
+.cs-help-btn:hover{background:#243a70}
+/* promo */
+.cs-promo{position:absolute;left:0;top:1900px;width:1366px;height:240px;z-index:2;overflow:hidden}
+.cs-promo-bg{position:absolute;inset:0;background:linear-gradient(98deg,#bfb9ba 0%,#6f6e69 12%,#d07210 28%,#b87340 48%,#cf7009 68%,#c46a08 82%,#8d3407 100%)}
+.cs-promo-car,.cs-promo-coins{position:absolute;bottom:0;pointer-events:none;object-fit:contain}
+.cs-promo-car{left:0;width:420px;height:240px}
+.cs-promo-coins{right:0;width:466px;height:240px}
+.cs-promo-t{position:relative;z-index:2}
+.cs-promo-btn{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);transition:background-color .15s,box-shadow .15s}
+.cs-promo-btn:hover{background:rgba(255,255,255,.22)}
+.cs-promo-btn:focus-visible{box-shadow:0 0 0 2px rgba(255,255,255,.8)}
+@media (prefers-reduced-motion:reduce){.cs-card,.cs-q,.cs-promo-btn{transition:none}}

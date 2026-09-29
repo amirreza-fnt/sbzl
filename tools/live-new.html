@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><link rel="icon" href="data:,"><title>Live: new pages (Figma | ours)</title>
+<style>
+body{margin:0;font:13px/1.5 Tahoma,sans-serif;background:#1e2230;color:#e8eaf0}
+header{position:sticky;top:0;z-index:9;background:#12151f;padding:8px 14px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;border-bottom:1px solid #333a4d}
+header b{color:#ffd479} #st{direction:ltr;font:12px monospace;color:#9fe0b8;flex:1;min-width:300px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+label{cursor:pointer;user-select:none} select,button{font:inherit}
+section{padding:12px 14px} h2{margin:4px 0 8px;font-size:15px;color:#ffd479}
+.row{display:flex;gap:16px;align-items:flex-start;direction:ltr;overflow-x:auto}
+.col{flex:none} .col .cap{font:12px monospace;color:#aab}
+.frame{position:relative;overflow:hidden;background:#fff;box-shadow:0 0 0 1px #444}
+.frame iframe{border:0;display:block;transform-origin:0 0;background:#fff}
+.frame img{display:block;transform-origin:0 0}
+/* overlay = reference image on top of our iframe; hidden in side-by-side mode (selector must beat ".frame img") */
+.frame img.ovl{position:absolute;left:0;top:0;pointer-events:none;mix-blend-mode:difference;display:none}
+body.diff .frame img.ovl{display:block} body.fade .frame img.ovl{display:block;mix-blend-mode:normal;opacity:.5}
+</style></head>
+<body>
+<header><b>زنده: صفحات جدید</b>
+<label><input type="radio" name="m" value="" checked autocomplete="off"> کنار هم</label>
+<label><input type="radio" name="m" value="diff" autocomplete="off"> diff (difference)</label>
+<label><input type="radio" name="m" value="fade" autocomplete="off"> overlay 50%</label>
+<label>بزرگنمایی دسکتاپ <select id="z"><option>0.5</option><option selected>0.6</option><option>0.75</option><option>1</option></select></label>
+<span id="st">…</span></header>
+<section><h2>register.html — ثبت نام (360×761)</h2><div class="row">
+ <div class="col"><div class="cap">Figma reference</div><div class="frame" style="width:360px;height:761px"><img data-src="pages/src/register-ref@1x.png" width="360" height="761"></div></div>
+ <div class="col"><div class="cap">ours (live, file: register.html)</div><div class="frame" style="width:360px;height:761px"><iframe data-page="../register.html" width="360" height="761" scrolling="no"></iframe><img class="ovl" data-src="pages/src/register-ref@1x.png" width="360" height="761"></div></div>
+</div></section>
+<section><h2>citizen-services.html — خدمات شهروندی (1366×2708)</h2><div class="row" id="dsk">
+ <div class="col"><div class="cap">Figma reference</div><div class="frame fz"><img data-src="pages/src/citizen-ref@1x.png" width="1366" height="2708"></div></div>
+ <div class="col"><div class="cap">ours (live, file: citizen-services.html)</div><div class="frame fz"><iframe data-page="../citizen-services.html" width="1366" height="2708" scrolling="no"></iframe><img class="ovl" data-src="pages/src/citizen-ref@1x.png" width="1366" height="2708"></div></div>
+</div></section>
+<script>
+document.querySelectorAll('img[data-src]').forEach(i => i.src = i.dataset.src);
+function mode() { const r = document.querySelector('input[name=m]:checked'); document.body.className = r ? r.value : ''; }
+document.querySelectorAll('input[name=m]').forEach(r => r.onchange = mode); mode();
+function zoom() { const z = +document.getElementById('z').value;
+  document.querySelectorAll('#dsk .frame').forEach(f => { f.style.width = 1366 * z + 'px'; f.style.height = 2708 * z + 'px';
+    f.querySelectorAll('iframe,img').forEach(e => e.style.transform = `scale(${z})`); }); }
+document.getElementById('z').onchange = zoom; zoom();
+const sig = {};
+async function tick() {
+  for (const f of document.querySelectorAll('iframe[data-page]')) {
+    try { const r = await fetch(f.dataset.page + '?t=' + Date.now(), { cache: 'no-store' });
+      const t = r.ok ? await r.text() : 'missing ' + r.status; const css = r.ok ? await Promise.all([...t.matchAll(/href="(css\/[^"]+)"/g)].map(m => fetch('../' + m[1] + '?t=' + Date.now(), { cache: 'no-store' }).then(x => x.text()))) : [];
+      const s = t.length + ':' + t.slice(-200) + css.map(c => c.length).join(',');
+      if (sig[f.dataset.page] !== s) { sig[f.dataset.page] = s; f.src = f.dataset.page + '?t=' + Date.now(); }
+    } catch (e) {}
+  }
+  try { const p = await (await fetch('../PROGRESS.md?t=' + Date.now(), { cache: 'no-store' })).text();
+    const rows = p.split('\n').filter(l => /^\|\s*\d+/.test(l)); const last = rows[rows.length - 1] || '';
+    document.getElementById('st').textContent = new Date().toLocaleTimeString('fa-IR') + ' — ' + last.slice(0, 400); } catch (e) {}
+  // refresh reference-overlay/background caches as well
+}
+tick(); setInterval(tick, 5000);
+</script></body></html>
