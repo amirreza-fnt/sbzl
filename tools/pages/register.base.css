@@ -1,14 +1,18 @@
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;background:#f8faf9}
 body{margin:0;background:#f8faf9;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 .app{position:relative;width:360px;height:761px;margin:0 auto;overflow:hidden;direction:rtl;background:#f8faf9;zoom:var(--k);font-family:Peyda,Tahoma,sans-serif;color:#1f1f1f}
-.bg{position:absolute;left:0;top:0;width:360px;height:761px;background:url("../assets/register/bg.png") 0 0/360px 761px no-repeat;pointer-events:none}
 .tx{position:absolute;margin:0;white-space:nowrap}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.back{position:absolute;left:6px;top:32px;width:32px;height:32px;border-radius:8px;outline:none}
-.back:focus-visible,.hit:focus-visible{box-shadow:0 0 0 2px rgba(255,255,255,.8)}
-/* fields: the drawn box/icon stay in the background; the live input sits on top, its frame only shows states */
+/* header: status strip (decorative), green band, emblem + wordmark */
+.reg-backdrop{position:absolute;left:0;top:0;width:360px;height:686px;background:url("../assets/register/backdrop@2x.png") 0 0/360px 686px no-repeat;pointer-events:none}
+.back{position:absolute;left:6px;top:32px;width:32px;height:32px;border:0;border-radius:8px;padding:0;background:rgba(255,255,255,.12);cursor:pointer;outline:none;display:flex;align-items:center;justify-content:center;z-index:5}
+.back svg{display:block;width:18px;height:18px}
+.back:hover{background:rgba(255,255,255,.22)}
+.back:active{background:rgba(255,255,255,.3)}
+.back:focus-visible{box-shadow:0 0 0 2px rgba(255,255,255,.85)}
+/* fields */
 .fld{position:absolute;left:23px;width:316px;height:38px}
-.fld input{position:absolute;inset:0;width:100%;height:100%;box-sizing:border-box;margin:0;border:1px solid transparent;border-radius:8px;background:transparent;
+.fld-ic{position:absolute;right:12px;top:50%;width:18px;height:18px;margin-top:-9px;color:#04a669;pointer-events:none}
+.fld input{position:absolute;inset:0;width:100%;height:100%;box-sizing:border-box;margin:0;border:1px solid #dfe0df;border-radius:8px;background:#fff;
   padding:0 42px 0 14px;direction:rtl;text-align:right;font:400 12px/36px "PeydaWeb FaNum",Peyda,sans-serif;color:#1f1f1f;outline:none;transition:border-color .15s,box-shadow .15s}
 .fld input.ltr{direction:ltr;text-align:right}
 .fld input:hover{border-color:#b9c0bd}
@@ -20,13 +24,13 @@ body{margin:0;background:#f8faf9;overflow-x:hidden;-webkit-font-smoothing:antial
 .err{position:absolute;right:4px;top:39px;margin:0;font:400 9px/12px Peyda,sans-serif;color:#e5484d;white-space:nowrap;opacity:0;transform:translateY(-2px);transition:opacity .15s,transform .15s;pointer-events:none}
 .fld.is-err .err{opacity:1;transform:none}
 /* terms checkbox */
-.chk{position:absolute;left:316px;top:578px;width:17px;height:17px;margin:0;opacity:0;cursor:pointer;z-index:2}
-.chk-box{position:absolute;left:318px;top:580px;width:13px;height:13px;border-radius:3px;pointer-events:none;transition:background-color .15s,box-shadow .15s}
-.chk:checked+.chk-box{background:#04a669 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='9' height='7' viewBox='0 0 9 7'><path d='M1 3.5l2.3 2.3L8 1' fill='none' stroke='white' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>") 50% 55%/9px 7px no-repeat}
+.terms{position:absolute;left:22px;top:576px;width:316px;height:48px}
+.chk{position:absolute;left:316px;top:2px;width:17px;height:17px;margin:0;opacity:0;cursor:pointer;z-index:2}
+.chk-box{position:absolute;left:318px;top:4px;width:13px;height:13px;border:0;border-radius:3px;background:transparent;pointer-events:none;transition:background-color .15s,box-shadow .15s}
+.chk:checked+.chk-box{border-color:#04a669;background:#04a669 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='9' height='7' viewBox='0 0 9 7'><path d='M1 3.5l2.3 2.3L8 1' fill='none' stroke='white' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>") 50% 55%/9px 7px no-repeat}
 .chk:focus-visible+.chk-box{box-shadow:0 0 0 3px rgba(4,166,105,.25)}
 .terms.is-err .chk-box{box-shadow:0 0 0 2px rgba(229,72,77,.7)}
 .terms .err{right:auto;left:0;top:34px}
-.terms{position:absolute;left:22px;top:576px;width:316px;height:48px}
 .terms.is-err .err{opacity:1;transform:none}
 .lbl{cursor:pointer}
 .lbl a{color:#04a669;font-weight:700;text-decoration:none}
@@ -37,14 +41,20 @@ body{margin:0;background:#f8faf9;overflow-x:hidden;-webkit-font-smoothing:antial
 .go:active{background:rgba(0,0,0,.12)}
 .go:focus-visible{box-shadow:0 0 0 3px rgba(4,166,105,.3)}
 .go .tx{pointer-events:none}
-/* tab bar (fixed like the service app) */
+.go-arr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* tab bar */
 .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:center;pointer-events:none}
 .tabbar-in{position:relative;width:360px;height:75px;background:url("../assets/register/tabbar.png") 0 0/360px 75px no-repeat;pointer-events:auto;zoom:var(--k)}
 .tabbar .tx{pointer-events:none}
-.tab{position:absolute;top:8px;height:64px;border-radius:10px;outline:none}
+.tab{position:absolute;top:8px;height:64px;border-radius:10px;outline:none;text-decoration:none}
+.tab-ic{position:absolute;left:50%;top:15px;width:24px;height:22px;margin-left:-12px;background:#5b688c;opacity:0;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;transition:background-color .2s,transform .2s}
+.tab:hover .tab-ic{transform:translateY(-1px)}
 .tab:hover{background:rgba(89,102,138,.06)}
+.tab.is-on .tab-ic{background:#0eb757}
+.tab.is-on~.tx,.tabbar-in .tab.is-on + .tx{color:#0eb757!important}
+.tab-ind{position:absolute;top:7px;height:2px;width:22px;background:#0eb757;border-radius:0 0 2px 2px;left:303px;pointer-events:none;display:none}
 .tab:focus-visible{box-shadow:0 0 0 2px rgba(0,183,87,.35)}
-/* dialogs (terms + success) */
+/* dialogs */
 .dlg{position:absolute;inset:0;z-index:60;display:none;align-items:center;justify-content:center;background:rgba(18,28,24,.45)}
 .dlg.is-on{display:flex}
 .dlg-card{width:300px;box-sizing:border-box;padding:20px 18px 16px;border-radius:14px;background:#fff;box-shadow:0 12px 40px rgba(0,0,0,.2);text-align:right}

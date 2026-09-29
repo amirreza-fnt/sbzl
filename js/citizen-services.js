@@ -15,6 +15,25 @@
     if (i === 0) { p.className = 'cs-ans-p'; p.innerHTML = original; }
     else { p.className = 'cs-ans-p flow'; p.textContent = ANSWERS[i]; }
   }
+  window.__nCitizenCards = document.querySelectorAll('.cs-card').length;
+  document.querySelectorAll('.cs-card').forEach(function (c) {
+    var go = c.querySelector('.cs-card-go');
+    var svg = go && go.querySelector('svg');
+    function onIn() {
+      c.classList.add('is-hover');
+      if (go) go.style.backgroundColor = '#00b757';
+      if (svg) svg.style.color = '#fff';
+    }
+    function onOut() {
+      c.classList.remove('is-hover');
+      if (go) go.style.backgroundColor = '';
+      if (svg) svg.style.color = '';
+    }
+    c.addEventListener('mouseenter', onIn);
+    c.addEventListener('mouseover', onIn);
+    c.addEventListener('mouseleave', onOut);
+    c.addEventListener('mouseout', onOut);
+  });
   qs.forEach(function (b, i) {
     b.addEventListener('click', function () { open(i); });
     b.addEventListener('keydown', function (e) {

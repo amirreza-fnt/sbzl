@@ -8,6 +8,7 @@ usage: build_citizen.py [--fit N]"""
 import os, sys, re, json, numpy as np
 from PIL import Image
 import pagekit as K
+from live_common import save_crop, card_mask_data_uri, FIGMA
 W, H = 1366, 2708
 MID0, MID1, FOOT_OFF = 164, 2197, 4306 - 2708
 REF = K.load(os.path.join(K.HERE, 'src/citizen-ref@1x.png'))
@@ -67,16 +68,47 @@ for t in T: x0, y0, x1, y1 = t['ref']; K.fill_rect(bg, (x0 - 2, y0 - 2, x1 + 2, 
 bg[1590:1645, 1236:1269] = bg[1590:1645, 1234:1235]
 for t in T:
     if 'color' not in t: t['color'] = K.ink_color(REF, bg, t['ref'])
-# FAQ row states (text-free): active look = row 0, inactive look = row 1
-# active row image includes the drop shadow it casts on the row below (20px); inactive look = row 4 (clean)
-row_on = bg[ROWS[0]:ROWS[0] + 64 + 20, RX0:RX1].copy(); row_off = bg[ROWS[3]:ROWS[3] + 64, RX0:RX1].copy()
-K.save(row_on, os.path.join(OUT_A, 'faq-on.png')); K.save(row_off, os.path.join(OUT_A, 'faq-off.png'))
-# card layers, then the page under them becomes plain white
+# erase card areas + FAQ rows for decorative extractions
 for i, (x, y, *_r) in enumerate(CARDS):
-    K.save(bg[y - 2:y + CH + 2, x - 2:x + CW + 2], os.path.join(OUT_A, f'card-{i}.png'))
-for i, (x, y, *_r) in enumerate(CARDS): bg[y - 2:y + CH + 2, x - 2:x + CW + 2] = 255
+    bg[y - 2:y + CH + 2, x - 2:x + CW + 2] = 255
+row_on = REF[ROWS[0]:ROWS[0] + 84, RX0:RX1].copy()
+row_off = REF[ROWS[3]:ROWS[3] + 64, RX0:RX1].copy()
+K.save(row_on, os.path.join(OUT_A, 'faq-on.png'))
+K.save(row_off, os.path.join(OUT_A, 'faq-off.png'))
+for y in ROWS:
+    bg[y:y + 64, RX0:RX1] = 255
 K.save(bg[MID0:MID1], os.path.join(OUT_A, 'mid.png'))
-BG = bg  # for fitting (cards painted back by the page itself)
+BG = bg
+
+def extract_assets():
+    ref2 = os.path.join(FIGMA, 'services_2x.png')
+    if not os.path.isfile(ref2):
+        return
+    save_crop(ref2, (0, 164, 1366, 420), os.path.join(OUT_A, 'hero-pattern@2x.png'))
+    save_crop(ref2, (656, 400, 710, 428), os.path.join(OUT_A, 'hero-notch@2x.png'))
+    save_crop(ref2, (0, 1900, 1366, 2140), os.path.join(OUT_A, 'promo-bg@2x.png'))
+    save_crop(ref2, (0, 1900, 1366, 2140), os.path.join(OUT_A, 'promo-art@2x.png'))
+    save_crop(ref2, (49, 1556, 681, 1876), os.path.join(OUT_A, 'faq-panel@2x.png'))
+    ref1 = Image.open(os.path.join(K.HERE, 'src/citizen-ref@1x.png')).convert('RGBA')
+    for i, (x, y, *_r) in enumerate(CARDS):
+        card = ref1.crop((x - 2, y - 2, x + CW + 2, y + CH + 2))
+        g = np.array(card)
+        m = (g[:, :, 1] > 120) & (g[:, :, 0] < 80) & (g[:, :, 2] < 120)
+        ys, xs = np.where(m)
+        if len(xs):
+            pad = 6
+            box = (max(0, xs.min() - pad), max(0, ys.min() - pad), min(card.width, xs.max() + pad), min(card.height, ys.max() + pad))
+            ic = card.crop(box)
+            w, h = ic.size
+            ic.resize((w * 2, h * 2), Image.Resampling.LANCZOS).save(os.path.join(OUT_A, f'icon-{i}@2x.png'), optimize=True)
+
+extract_assets()
+
+HERO_IC = '''<svg class="cs-hero-ic" viewBox="0 0 40 40" aria-hidden="true"><rect x="4" y="4" width="14" height="14" rx="2" fill="currentColor"/><rect x="22" y="4" width="14" height="14" rx="2" fill="currentColor"/><rect x="4" y="22" width="14" height="14" rx="2" fill="currentColor"/><rect x="22" y="22" width="14" height="14" rx="2" fill="currentColor"/></svg>'''
+SEC_ORN = '''<svg class="cs-orn" viewBox="0 0 28 28" aria-hidden="true"><circle cx="8" cy="14" r="3" fill="currentColor"/><circle cx="14" cy="14" r="3" fill="currentColor"/><circle cx="20" cy="14" r="3" fill="currentColor"/></svg>'''
+Q_ARR = '<span class="cs-q-arr" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></span>'
+PROMO_IC = '<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="position:absolute;right:14px;top:50%;margin-top:-9px"><path fill="#fff" d="M7 2h10a2 2 0 0 1 2 2v16l-4-2.5L11 20l-4-2.5V4a2 2 0 0 1 2-2Z"/></svg>'
+CARD_GO = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>'
 
 SHELL = json.load(open(os.path.join(K.HERE, 'shell-home.json')))
 def relink(h):
@@ -97,15 +129,20 @@ def build(fit):
             x0, y0, x1, y1 = t['ref']
             return K.span(dict(t, align='l'), dict(f, sx=1.0), W, parent=t['parent'], extra_style=f'width:{x1 - x0}px;text-align:justify;text-align-last:justify;' + extra)
         return K.span(t, f, W, parent=t.get('parent'), extra_style=extra, **kw)
+    sec_hd = lambda cls: f'<div class="cs-sec-hd {cls}" aria-hidden="true">{SEC_ORN}<span class="cs-line-r"></span><span class="cs-line-l"></span></div>'
     cards = []
     for i, (x, y, tt, st, href, kind) in enumerate(CARDS):
-        cards.append(f'<a class="cs-card cs-card-{kind}" href="{href}" style="left:{x - 2}px;top:{y - 2}px;width:{CW + 4}px;height:{CH + 4}px;background-image:url(assets/citizen/card-{i}.png)">'
-                     f'{sp(f"c{i}-t")}{sp(f"c{i}-s")}</a>')
+        cards.append(
+            f'<a class="cs-card cs-card-{kind}" href="{href}" style="left:{x - 2}px;top:{y - 2}px">'
+            f'<span class="cs-card-in"><img class="cs-card-ic" src="assets/citizen/icon-{i}@2x.png" width="48" height="40" alt="">'
+            f'<span class="cs-card-go">{CARD_GO}</span></span>{sp(f"c{i}-t")}{sp(f"c{i}-s")}</a>')
     rows = []
     for k, y in enumerate(ROWS):
         on = k == 0
-        rows.append(f'<button class="cs-q{" is-on" if on else ""}" type="button" id="q{k}" aria-expanded="{"true" if on else "false"}" aria-controls="ans" data-q="{k}" '
-                    f'style="left:{RX0}px;top:{y}px;width:{RX1 - RX0}px;height:64px">{sp(f"q{k}")}</button>')
+        rows.append(
+            f'<button class="cs-q{" is-on" if on else ""}" type="button" id="q{k}" aria-expanded="{"true" if on else "false"}" aria-controls="ans" data-q="{k}" '
+            f'style="left:{RX0}px;top:{y}px;width:{RX1 - RX0}px;height:64px">'
+            f'<span class="cs-q-ic" aria-hidden="true">?</span>{Q_ARR}{sp(f"q{k}")}</button>')
     ans = ''.join(sp(f'a{j}') for j in range(len(ANS)))
     return f'''<!DOCTYPE html>
 <html lang="fa" dir="rtl">
@@ -133,7 +170,7 @@ def build(fit):
 </section>
 <section class="cs-promo" aria-label="پرداخت عوارض با ۲۰ درصد تخفیف">
 <p class="cs-promo-t">{sp('p-off')}{sp('p-off2')}</p><p class="cs-promo-t">{sp('p-title')}{sp('p-sub')}</p>
-<a class="cs-promo-btn" href="service-app.html" style="left:1119px;top:2065px;width:175px;height:42px">{sp('p-btn')}</a></section>
+<a class="cs-promo-btn" href="service-app.html" style="left:1119px;top:2065px;width:175px;height:42px">{PROMO_IC}{sp('p-btn')}</a></section>
 <div class="cs-foot">
 {FOOT}
 </div>
@@ -152,6 +189,8 @@ def write(fit):
     css = open(os.path.join(K.HERE, 'fonts.css')).read() + open(os.path.join(K.HERE, 'citizen.base.css')).read()
     qon = fit.d.get('q0', {}).get('fw') or 600; qoff = fit.d.get('q1', {}).get('fw') or 400
     css += f'.cs-stage{{--q-on:{qon};--q-off:{qoff}}}\n'
+    css += '.stage.cs-stage a.cs-card.is-hover .cs-card-go,.stage.cs-stage a.cs-card:hover .cs-card-go{background-color:#00b757!important}\n'
+    css += '.stage.cs-stage a.cs-card.is-hover .cs-card-go svg,.stage.cs-stage a.cs-card:hover .cs-card-go svg{color:#fff!important}\n'
     open(os.path.join(K.SITE, 'css/citizen-services.css'), 'w').write(css)
 
 fit = K.Fit('citizen')
