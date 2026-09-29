@@ -20,6 +20,8 @@
 ```
 index.html              صفحهٔ اصلی
 service-app.html        اپ خدمات
+register.html           ثبت‌نام (موبایل)
+citizen-services.html   خدمات شهروندی (دسکتاپ)
 css/style.css           استایل صفحهٔ اصلی
 css/service-app.css     استایل اپ خدمات (فونت‌ها از ../fonts مشترک)
 js/main.js  js/slider.js  js/contact.js   اسکریپت‌های صفحهٔ اصلی
@@ -43,6 +45,8 @@ docs/                   گزارش کار (PROGRESS) و راهنمای قبلی 
 ## بررسی و مقایسه (اختیاری، برای توسعه‌دهنده)
 نیاز به Node.js، بسته‌های `playwright-core`، `pngjs`، `pixelmatch` و Chrome:
 - `node tools/tests/compare-site.js` ← مقایسهٔ پیکسلی هر دو صفحه با فیگما (صفحهٔ اصلی به تصویر فریم فیگما نیاز دارد: مسیر آن را به‌عنوان آرگومان اول بدهید)
+- `node tools/tests/compare-pages.js` ← مقایسهٔ `register.html` و `citizen-services.html` با خروجی فیگما (۱x و ۲x)، گزارش بخشی در `docs/compare-pages-result.json` و سه‌تایی در `docs/*-figma-ours-diff@*.png`
+- `node tools/tests/test-pages-interactive.js` ← اعتبارسنجی، FAQ، هاور کارت، و مقیاس‌دهی پهنای citizen
 - `node tools/tests/test-site.js` ← بارگذاری همهٔ فایل‌ها، فونت‌های مشترک و لینک بین صفحه‌ها
 - `node tools/tests/test-contact.js`، `node tools/tests/test-interactive.js` (با `FILE=1`)، `node tools/tests/test-service-app.js`
 - `python3 tools/assemble.py <مخزن صفحهٔ اصلی> <مخزن اپ خدمات>` ← ساخت دوبارهٔ پوشه پس از تغییر در منبع‌ها

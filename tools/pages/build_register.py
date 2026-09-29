@@ -25,27 +25,26 @@ TABS = [('صفحه نخست', (286, 735, 342, 752), 'service-app.html', 'is-on')
         ('پیام‌ها و اعلانات', (106, 735, 168, 752), 'service-app.html#messages', ''), ('پنل کاربری', (27, 735, 70, 752), 'service-app.html#login', '')]
 for i, (lab, r, _, _) in enumerate(TABS): text(f'tab{i}', lab, r, fs=10, align='c', parent=(0, TAB_Y, W))
 
-def extract_assets(page_bg):
+def extract_assets():
     ref2 = os.path.join(FIGMA, 'register_2x.png')
-    if os.path.isfile(ref2):
-        save_crop(ref2, (128, 36, 226, 92), os.path.join(OUT_A, 'emblem@2x.png'))
-        save_crop(ref2, (82, 86, 278, 116), os.path.join(OUT_A, 'wordmark@2x.png'))
-    K.save(page_bg[:TAB_Y], os.path.join(OUT_A, 'backdrop@2x.png'))
-    tb = page_bg[TAB_Y:].copy()
-    for t in T:
-        if t['id'].startswith('tab'):
-            x0, y0, x1, y1 = t['ref']
-            K.fill_rect(tb, (x0 - 2, y0 - TAB_Y - 2, x1 + 2, y1 - TAB_Y + 2))
-    K.save(tb, os.path.join(OUT_A, 'tabbar.png'))
+    if not os.path.isfile(ref2):
+        return
+    save_crop(ref2, (128, 36, 226, 92), os.path.join(OUT_A, 'emblem@2x.png'))
+    save_crop(ref2, (82, 86, 278, 116), os.path.join(OUT_A, 'wordmark@2x.png'))
+    save_crop(ref2, (300, 12, 356, 72), os.path.join(OUT_A, 'pattern-tile@2x.png'))
 
-# backdrop: reference with live text + field boxes + emblem/wordmark erased
+extract_assets()
+
+# Synthetic background for ink fitting (live layers, no raster chrome)
 bg = REF.copy()
-for t in T: x0, y0, x1, y1 = t['ref']; K.fill_rect(bg, (x0 - 2, y0 - 2, x1 + 2, y1 + 2))
+for t in T:
+    x0, y0, x1, y1 = t['ref']
+    K.fill_rect(bg, (x0 - 2, y0 - 2, x1 + 2, y1 + 2))
 for _fid, y, _ph, _r in FLD:
     K.fill_rect(bg, (23, y, 339, y + 38))
-page_bg = bg.copy()
-page_bg[TAB_Y:] = np.median(bg[TAB_Y - 6:TAB_Y - 2].reshape(-1, 3), 0)
-extract_assets(page_bg)
+K.fill_rect(bg, (22, 630, 338, 668))
+K.fill_rect(bg, (128, 36, 278, 116))
+bg[TAB_Y:] = np.array([236, 243, 246], dtype=np.uint8)
 for t in T:
     if 'color' not in t: t['color'] = K.ink_color(REF, bg, t['ref'])
 
@@ -57,11 +56,16 @@ FLD_IC = {
     'mobile': '<svg class="fld-ic" viewBox="0 0 20 20" aria-hidden="true"><path fill="currentColor" d="M6.5 2h7a1.5 1.5 0 0 1 1.5 1.5v13A1.5 1.5 0 0 1 13.5 18h-7A1.5 1.5 0 0 1 5 16.5v-13A1.5 1.5 0 0 1 6.5 2Zm0 1.3a.2.2 0 0 0-.2.2v13c0 .1.1.2.2.2h7c.1 0 .2-.1.2-.2v-13a.2.2 0 0 0-.2-.2h-7Zm3.5 11.2a.9.9 0 1 0 0 1.8.9.9 0 0 0 0-1.8Z"/></svg>',
     'email': '<svg class="fld-ic" viewBox="0 0 20 20" aria-hidden="true"><path fill="currentColor" d="M2.5 5.5A1.5 1.5 0 0 1 4 4h12a1.5 1.5 0 0 1 1.5 1.5v9A1.5 1.5 0 0 1 16 16H4a1.5 1.5 0 0 1-1.5-1.5v-9Zm1.2.8 5.3 4.2 5.3-4.2H3.7Zm11.1 1.4-5.1 4-5.1-4v6.8c0 .1.1.2.2.2h12c.1 0 .2-.1.2-.2V7.7Z"/></svg>',
 }
-TAB_MASK = {
-    'home': "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 25 23'%3E%3Cpath fill='%23000' d='M3 9.5 12.5 2l9.5 7.5V21a1 1 0 0 1-1 1h-5.5v-6H10v6H4a1 1 0 0 1-1-1V9.5Z'/%3E%3C/svg%3E\")",
-    'faq': "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M12 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm0 11.5a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5ZM9.8 9.3A3.2 3.2 0 0 1 12 8.2c1.4 0 2.4.8 2.4 1.9 0 .9-.5 1.4-1.5 1.9l-.3.1c-.6.3-.8.6-.8 1.1V14h-1.8v-.2c0-1 .5-1.5 1.3-1.9l.4-.2c.6-.3.8-.5.8-1 0-.5-.4-.9-1.2-.9-.8 0-1.3.4-1.4 1.1H9.8Z'/%3E%3C/svg%3E\")",
-    'bell': "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M12 22a2.2 2.2 0 0 0 2.1-1.5H9.9A2.2 2.2 0 0 0 12 22Zm7-4.5V11a5 5 0 0 0-4-4.9V5.5a2 2 0 1 0-4 0v.6A5 5 0 0 0 7 11v6.5l-1.2 1.2V20h14.4v-1.3L19 17.5Z'/%3E%3C/svg%3E\")",
-    'user': "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4 0-7 2-7 4.5V20h14v-1.5C19 16 16 14 12 14Z'/%3E%3C/svg%3E\")",
+STATUS = '''<div class="status-bar" aria-hidden="true"><span class="status-time">9:41</span><span class="status-ic">
+<svg viewBox="0 0 18 12" aria-hidden="true"><path fill="currentColor" d="M1 10h2V6H1v4Zm4 0h2V4H5v6Zm4 0h2V2H9v8Zm4 0h2V0h-2v10Z"/></svg>
+<svg viewBox="0 0 16 12" aria-hidden="true"><path fill="currentColor" d="M8 10.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm4.2-2.1a4.8 4.8 0 0 0-8.4 0l1.3 1.3a3.2 3.2 0 0 1 5.8 0l1.3-1.3ZM14 4.7 12.7 6a6.4 6.4 0 0 0-9.4 0L2 4.7a8 8 0 0 1 12 0Z"/></svg>
+<svg viewBox="0 0 26 12" aria-hidden="true"><rect x="1" y="1" width="20" height="10" rx="2" stroke="currentColor" fill="none" stroke-width="1.2"/><rect x="22" y="4" width="2.5" height="4" rx="1" fill="currentColor"/><rect x="3" y="3" width="14" height="6" rx="1" fill="currentColor"/></svg>
+</span></div>'''
+TAB_SVG = {
+    'home': '<svg class="tab-ic" viewBox="0 0 25 23" aria-hidden="true"><path fill="currentColor" d="M3 9.5 12.5 2l9.5 7.5V21a1 1 0 0 1-1 1h-5.5v-6H10v6H4a1 1 0 0 1-1-1V9.5Z"/></svg>',
+    'faq': '<svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm0 11.5a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5ZM9.8 9.3A3.2 3.2 0 0 1 12 8.2c1.4 0 2.4.8 2.4 1.9 0 .9-.5 1.4-1.5 1.9l-.3.1c-.6.3-.8.6-.8 1.1V14h-1.8v-.2c0-1 .5-1.5 1.3-1.9l.4-.2c.6-.3.8-.5.8-1 0-.5-.4-.9-1.2-.9-.8 0-1.3.4-1.4 1.1H9.8Z"/></svg>',
+    'bell': '<svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 22a2.2 2.2 0 0 0 2.1-1.5H9.9A2.2 2.2 0 0 0 12 22Zm7-4.5V11a5 5 0 0 0-4-4.9V5.5a2 2 0 1 0-4 0v.6A5 5 0 0 0 7 11v6.5l-1.2 1.2V20h14.4v-1.3L19 17.5Z"/></svg>',
+    'user': '<svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4 0-7 2-7 4.5V20h14v-1.5C19 16 16 14 12 14Z"/></svg>',
 }
 TAB_POS = [('home', 272, 84), ('faq', 180, 89), ('bell', 92, 90), ('user', 13, 71)]
 
@@ -86,10 +90,10 @@ def build(fit):
     tab_links = []
     for i, (lab, _r, href, cls) in enumerate(TABS):
         key, left, width = TAB_POS[i]
-        m = TAB_MASK[key]
+        ind = '<span class="tab-ind" aria-hidden="true"></span>' if cls else ''
         tab_links.append(
             f'<a class="tab {cls}" href="{href}" style="left:{left}px;width:{width}px" aria-label="{lab}"'
-            f'{" aria-current=\"page\"" if cls else ""}><i class="tab-ic" style="-webkit-mask-image:{m};mask-image:{m}"></i></a>')
+            f'{" aria-current=\"page\"" if cls else ""}>{ind}{TAB_SVG[key]}</a>')
     tabs = tab_labels + ''.join(tab_links)
     return f'''<!doctype html>
 <html lang="fa" dir="rtl">
@@ -102,7 +106,11 @@ def build(fit):
 </head>
 <body>
 <div class="app" id="top">
-<div class="reg-backdrop" aria-hidden="true"></div>
+<header class="reg-top">{STATUS}<div class="reg-band" aria-hidden="true">
+<img class="reg-emblem" src="assets/register/emblem@2x.png" width="49" height="28" alt="">
+<img class="reg-wordmark" src="assets/register/wordmark@2x.png" width="196" height="15" alt="شهرداری سبزوار">
+</div></header>
+<div class="reg-sheet" aria-hidden="true"></div>
 <a class="back" href="service-app.html" aria-label="بازگشت به فهرست خدمات">{BACK_SVG}</a>
 <form class="reg" id="reg" action="#" novalidate aria-labelledby="reg-title">
 {sp('title', extra_style='').replace('data-t="title"', 'data-t="title" id="reg-title"')}

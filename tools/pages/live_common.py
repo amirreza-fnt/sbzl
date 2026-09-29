@@ -1,10 +1,30 @@
 """Extract decorative crops from Figma exports (@2x source, displayed @1x)."""
 import base64
 import os
+import numpy as np
 from PIL import Image
 
 SITE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 FIGMA = os.path.join(SITE, 'ref', 'figma')
+
+
+def save_cutout_1x(ref1_path, box, out_path, tol=20, scale2=True):
+    """Foreground cutout (car/coins) with alpha from 1x reference; optional 2x upscale for @2x assets."""
+    im = np.array(Image.open(ref1_path).convert('RGB'))
+    x0, y0, x1, y1 = [int(v) for v in box]
+    sub = im[y0:y1, x0:x1].astype(np.int16)
+    top = np.median(sub[:4], axis=0)
+    bot = np.median(sub[-4:], axis=0)
+    bg = ((top + bot) / 2).astype(np.int16)
+    diff = np.abs(sub - bg[None, :, :]).max(axis=2)
+    sat = sub.max(axis=2) - sub.min(axis=2)
+    alpha = np.clip((diff - tol) * 10 + (sat > 28).astype(np.float32) * 80, 0, 255).astype(np.uint8)
+    rgba = np.dstack([sub.astype(np.uint8), alpha])
+    out = Image.fromarray(rgba, 'RGBA')
+    if scale2:
+        w, h = out.size
+        out = out.resize((w * 2, h * 2), Image.Resampling.LANCZOS)
+    out.save(out_path, optimize=True)
 
 
 def save_crop(src_path, box, out_path, scale=0.5):

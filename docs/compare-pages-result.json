@@ -4,29 +4,29 @@
     "scale2": null,
     "errors": [],
     "1x": {
-      "total": 0.71,
+      "total": 3.21,
       "sections": {
-        "header": 0.07,
-        "intro": 0.94,
-        "fields": 0.3,
+        "header": 17.84,
+        "intro": 2.34,
+        "fields": 0.74,
         "space": 0,
-        "terms": 2.35,
-        "button": 0.26,
-        "tabbar": 3.06
+        "terms": 1.93,
+        "button": 0.45,
+        "tabbar": 2.94
       },
       "height": 761,
       "triptych": "/workspace/out/compare-pages/register-figma-ours-diff@1x.png"
     },
     "2x": {
-      "total": 1.15,
+      "total": 2.9,
       "sections": {
-        "header": 3.76,
-        "intro": 3.14,
-        "fields": 1.34,
-        "space": 0.44,
+        "header": 5.15,
+        "intro": 24.19,
+        "fields": 3.76,
+        "space": 0.64,
         "terms": 0,
-        "button": 0.68,
-        "tabbar": 0.39
+        "button": 1.05,
+        "tabbar": 0.61
       },
       "height": 1522,
       "triptych": "/workspace/out/compare-pages/register-figma-ours-diff@2x.png"
@@ -37,29 +37,29 @@
     "scale2": null,
     "errors": [],
     "1x": {
-      "total": 0.92,
+      "total": 4.38,
       "sections": {
         "header": 0.39,
-        "hero": 0.34,
-        "smart": 0.61,
-        "services": 1.12,
-        "faq": 0.76,
-        "promo": 1.44,
+        "hero": 2.64,
+        "smart": 1.08,
+        "services": 1.04,
+        "faq": 5.07,
+        "promo": 29.83,
         "footer": 1.19
       },
       "height": 2708,
       "triptych": "/workspace/out/compare-pages/citizen-figma-ours-diff@1x.png"
     },
     "2x": {
-      "total": 0.96,
+      "total": 4.18,
       "sections": {
-        "header": 0.44,
-        "hero": 0.03,
-        "smart": 0.38,
-        "services": 0.67,
-        "faq": 0.39,
-        "promo": 3.32,
-        "footer": 0.82
+        "header": 0.45,
+        "hero": 0.08,
+        "smart": 1.21,
+        "services": 2.43,
+        "faq": 1.09,
+        "promo": 2.23,
+        "footer": 0.81
       },
       "height": 5416,
       "triptych": "/workspace/out/compare-pages/citizen-figma-ours-diff@2x.png"
