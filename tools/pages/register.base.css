@@ -1,0 +1,58 @@
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;background:#f8faf9}
+body{margin:0;background:#f8faf9;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.app{position:relative;width:360px;height:761px;margin:0 auto;overflow:hidden;direction:rtl;background:#f8faf9;zoom:var(--k);font-family:Peyda,Tahoma,sans-serif;color:#1f1f1f}
+.bg{position:absolute;left:0;top:0;width:360px;height:761px;background:url("../assets/register/bg.png") 0 0/360px 761px no-repeat;pointer-events:none}
+.tx{position:absolute;margin:0;white-space:nowrap}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.back{position:absolute;left:6px;top:32px;width:32px;height:32px;border-radius:8px;outline:none}
+.back:focus-visible,.hit:focus-visible{box-shadow:0 0 0 2px rgba(255,255,255,.8)}
+/* fields: the drawn box/icon stay in the background; the live input sits on top, its frame only shows states */
+.fld{position:absolute;left:23px;width:316px;height:38px}
+.fld input{position:absolute;inset:0;width:100%;height:100%;box-sizing:border-box;margin:0;border:1px solid transparent;border-radius:8px;background:transparent;
+  padding:0 42px 0 14px;direction:rtl;text-align:right;font:400 12px/36px "PeydaWeb FaNum",Peyda,sans-serif;color:#1f1f1f;outline:none;transition:border-color .15s,box-shadow .15s}
+.fld input.ltr{direction:ltr;text-align:right}
+.fld input:hover{border-color:#b9c0bd}
+.fld input:focus{border-color:#04a669;box-shadow:0 0 0 3px rgba(4,166,105,.14)}
+.fld.is-err input{border-color:#e5484d;box-shadow:0 0 0 3px rgba(229,72,77,.12)}
+.fld.is-ok input{border-color:rgba(4,166,105,.55)}
+.fld .ph{cursor:text;pointer-events:none}
+.fld input:not(:placeholder-shown)~.ph{display:none}
+.err{position:absolute;right:4px;top:39px;margin:0;font:400 9px/12px Peyda,sans-serif;color:#e5484d;white-space:nowrap;opacity:0;transform:translateY(-2px);transition:opacity .15s,transform .15s;pointer-events:none}
+.fld.is-err .err{opacity:1;transform:none}
+/* terms checkbox */
+.chk{position:absolute;left:316px;top:578px;width:17px;height:17px;margin:0;opacity:0;cursor:pointer;z-index:2}
+.chk-box{position:absolute;left:318px;top:580px;width:13px;height:13px;border-radius:3px;pointer-events:none;transition:background-color .15s,box-shadow .15s}
+.chk:checked+.chk-box{background:#04a669 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='9' height='7' viewBox='0 0 9 7'><path d='M1 3.5l2.3 2.3L8 1' fill='none' stroke='white' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>") 50% 55%/9px 7px no-repeat}
+.chk:focus-visible+.chk-box{box-shadow:0 0 0 3px rgba(4,166,105,.25)}
+.terms.is-err .chk-box{box-shadow:0 0 0 2px rgba(229,72,77,.7)}
+.terms .err{right:auto;left:0;top:34px}
+.terms{position:absolute;left:22px;top:576px;width:316px;height:48px}
+.terms.is-err .err{opacity:1;transform:none}
+.lbl{cursor:pointer}
+.lbl a{color:#04a669;font-weight:700;text-decoration:none}
+.lbl a:hover{text-decoration:underline}
+/* submit */
+.go{position:absolute;left:22px;top:630px;width:316px;height:38px;margin:0;padding:0;border:0;border-radius:8px;background:transparent;cursor:pointer;outline:none;transition:background-color .15s,box-shadow .15s}
+.go:hover{background:rgba(0,0,0,.06)}
+.go:active{background:rgba(0,0,0,.12)}
+.go:focus-visible{box-shadow:0 0 0 3px rgba(4,166,105,.3)}
+.go .tx{pointer-events:none}
+/* tab bar (fixed like the service app) */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:center;pointer-events:none}
+.tabbar-in{position:relative;width:360px;height:75px;background:url("../assets/register/tabbar.png") 0 0/360px 75px no-repeat;pointer-events:auto;zoom:var(--k)}
+.tabbar .tx{pointer-events:none}
+.tab{position:absolute;top:8px;height:64px;border-radius:10px;outline:none}
+.tab:hover{background:rgba(89,102,138,.06)}
+.tab:focus-visible{box-shadow:0 0 0 2px rgba(0,183,87,.35)}
+/* dialogs (terms + success) */
+.dlg{position:absolute;inset:0;z-index:60;display:none;align-items:center;justify-content:center;background:rgba(18,28,24,.45)}
+.dlg.is-on{display:flex}
+.dlg-card{width:300px;box-sizing:border-box;padding:20px 18px 16px;border-radius:14px;background:#fff;box-shadow:0 12px 40px rgba(0,0,0,.2);text-align:right}
+.dlg-card h2{margin:0 0 8px;font:700 15px/22px Peyda,sans-serif;color:#1f1f1f}
+.dlg-card p,.dlg-card li{margin:0 0 8px;font:400 11px/19px Peyda,sans-serif;color:#555}
+.dlg-card ol{margin:0 0 8px;padding:0 16px 0 0}
+.dlg-btn{display:block;width:100%;height:36px;margin-top:6px;border:0;border-radius:8px;background:#04a669;color:#fff;font:700 13px/36px Peyda,sans-serif;cursor:pointer;text-align:center;text-decoration:none}
+.dlg-btn:hover{background:#03925c}
+.ok-ic{width:52px;height:52px;margin:0 auto 10px;border-radius:50%;background:#e6f6ef url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='18' viewBox='0 0 24 18'><path d='M2 9l7 7L22 2' fill='none' stroke='%2304a669' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/></svg>") 50% 50%/24px 18px no-repeat}
+.dlg-card.center{text-align:center}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}

@@ -1,0 +1,9 @@
+@font-face{font-family:Peyda;src:url("../fonts/Peyda/Peyda-Regular.woff") format("woff");font-weight:400;font-display:swap}
+@font-face{font-family:Peyda;src:url("../fonts/Peyda/Peyda-Medium.woff") format("woff");font-weight:500;font-display:swap}
+@font-face{font-family:Peyda;src:url("../fonts/Peyda/Peyda-SemiBold.woff") format("woff");font-weight:600;font-display:swap}
+@font-face{font-family:Peyda;src:url("../fonts/Peyda/Peyda-Bold.woff") format("woff");font-weight:700;font-display:swap}
+@font-face{font-family:Peyda;src:url("../fonts/Peyda/Peyda-ExtraBold.woff") format("woff");font-weight:800;font-display:swap}
+@font-face{font-family:"PeydaWeb FaNum";src:url("../fonts/PeydaWebFaNum_from_RecycleBin/PeydaWebFaNum-Regular.woff2") format("woff2"),url("../fonts/PeydaWebFaNum_from_RecycleBin/PeydaWebFaNum-Regular.woff") format("woff");font-weight:400;font-display:swap}
+@font-face{font-family:"PeydaWeb FaNum";src:url("../fonts/PeydaWebFaNum_from_RecycleBin/PeydaWebFaNum-Medium.woff2") format("woff2"),url("../fonts/PeydaWebFaNum_from_RecycleBin/PeydaWebFaNum-Medium.woff") format("woff");font-weight:500;font-display:swap}
+@font-face{font-family:"PeydaWeb FaNum";src:url("../fonts/PeydaWebFaNum_from_RecycleBin/PeydaWebFaNum-SemiBold.woff2") format("woff2"),url("../fonts/PeydaWebFaNum_from_RecycleBin/PeydaWebFaNum-SemiBold.woff") format("woff");font-weight:600;font-display:swap}
+@font-face{font-family:"PeydaWeb FaNum";src:url("../fonts/PeydaWebFaNum_from_RecycleBin/PeydaWebFaNum-Bold.woff2") format("woff2"),url("../fonts/PeydaWebFaNum_from_RecycleBin/PeydaWebFaNum-Bold.woff") format("woff");font-weight:700;font-display:swap}

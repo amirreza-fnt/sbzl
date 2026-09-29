@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30.8" height="24" viewBox="0 0 30.8 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Rebuilt from Figma layer 249:702 "Group 3077" (card "عمران و فضای شهری"): node.json has only the layer boxes
+       (no vector paths) and the card is off-canvas, so each outlined-stroke layer is redrawn in its exact box:
+       green buildings 249:707 (#00b87f), gold windows 249:703 and gold bulldozer 249:716 "Bulldozer_1_" (#bba16a). -->
+  <g stroke="#00b87f">
+    <path d="M6.3 23.2V0.8H17.7V9.6"/>            <!-- 249:710 tall building 13x24 -->
+    <path d="M6.3 8H0.8V23.2H14"/>                <!-- 249:708 low building 7.1x16.8 -->
+    <path d="M0.8 11.8H3.5M0.8 15.6H3.5M0.8 19.4H3.5"/> <!-- 249:712-714 floor marks -->
+    <path d="M10.1 23.2V15.6H13.9V17"/>           <!-- 249:715 door 5.4x9.2 -->
+    <path d="M22.2 3.9V9.4M21.3 7.5H23.2"/>       <!-- 249:709 / 249:711 sign post -->
+  </g>
+  <g stroke="#bba16a">
+    <path d="M10.1 4.4H13.9M10.1 8.2H13.9M10.1 12H13.9"/> <!-- 249:703 windows -->
+    <rect x="16.4" y="18.5" width="10.2" height="4.6" rx="2.3"/> <!-- 249:718 tracks 11.8x6.2 -->
+    <path d="M17.5 18.5V11.6H21.3L24.2 15.8V18.5"/> <!-- 249:719 cab 8.3x8.9 -->
+    <path d="M26.6 20.9H28.9"/>                   <!-- 249:723 arm -->
+    <path d="M28.9 18.5Q30.4 20.8 28.9 23.1"/>    <!-- 249:722 blade -->
+  </g>
+  <g fill="#bba16a"><circle cx="18.7" cy="20.8" r="0.6"/><circle cx="24.3" cy="20.8" r="0.6"/></g>
+</svg>
